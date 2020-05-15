@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AboutTheUniversityController!{% endblock %}
+
+{% block body %}
+
+
+<!-- ##### About Area Start ##### -->
+<section class="about-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <h2>{{ aboutUniversity.aboutRight.name }}</h2>
+                <p>{{ aboutUniversity.aboutRight.content }}</p>
+            </div>
+
+
+            <div class="col-12 col-lg-6">
+                <h2>{{ aboutUniversity.aboutLeft.name }}</h2>
+                <p>{{ aboutUniversity.aboutLeft.content }}</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mt-80">
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact d-flex align-items-center">
+                    <h3><span class="counter">{{ newsArticle }}</span></h3>
+                    <div class="cf-text">
+                        <h6>News Article</h6>
+                        <span>Donec turpis erat, scelerisq</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Cool Fact -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-cool-fact d-flex align-items-center">
+                    <h3><span class="counter">{{ users }}</span></h3>
+                    <div class="cf-text">
+                        <h6>Users</h6>
+                        <span>Donec turpis erat, scelerisq</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### About Area End ##### -->
+
+
+
+<!-- ##### Team Area Start ##### -->
+<section class="newspaper-team mb-30">
+    <div class="container">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="single-cool-fact d-flex align-items-center">
+                <div class="cf-text">
+                    <h4>Our Teachers</h4>
+                    <span>Donec turpis erat, scelerisq</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% for teacher in teachers %}
+            <!-- Single Team Member -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-team-member">
+                    <img src="/img/users/{{ teacher.image }}" alt="">
+                    <div class="team-info">
+                        <h5>{{ teacher.name }}</h5>
+                        <h6>{{ teacher.type }}</h6>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- ##### Team Area End ##### -->
+
+{% endblock %}

@@ -1,0 +1,39 @@
+<div class="top-header-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-header-content d-flex align-items-center justify-content-between">
+                    <!-- Logo -->
+
+                    <div class="logo">
+                        <a href="index.html"><img src="/img/core-img/logo5.png" alt=""></a>
+                    </div>
+
+                    <!-- Login Search Area -->
+                    <div class="login-search-area d-flex align-items-center">
+                        <!-- Login -->
+                        {% if not app.user %}
+                            <div class="login d-flex">
+                                <a href="{{ path('app_login') }}">Login</a>
+                                <a href="{{ path('app_register') }}">Register</a>
+
+                            </div>
+                        {% else %}
+                            <div class="login d-flex">
+                                <h6>Welcome, {{ app.user.name }}</h6>
+                                <a href="{{ path('app_logout') }}">Log Out</a>
+                            </div>
+                        {% endif %}
+                        <!-- Search Service -->
+                        <div class="search-form">
+                            <form action="#" method="post">
+                                <input type="search" name="search" class="form-control" placeholder="Search">
+                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

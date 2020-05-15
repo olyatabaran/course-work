@@ -1,0 +1,45 @@
+{% extends 'baseAdmin.html.twig' %}
+{% block body %}
+
+
+<div class="row">
+    <div class="col-3">
+        <div class="list-group">
+            <h2><a href="{{ path('admin_news') }}" class="list-group-item list-group-item-action">Новости</a></h2>
+            <h2><a href="{{ path('admin_comment') }}" class="list-group-item list-group-item-action">Комментарии</a></h2>
+            <h2><a href="{{ path('admin_department') }}" class="list-group-item list-group-item-action">Депаратаменты</a></h2>
+            <h2><a href="{{ path('admin_users') }}" class="list-group-item list-group-item-action">Пользователи</a></h2>
+            <h2><a href="{{ path('admin_text-block') }}" class="list-group-item list-group-item-action">Блоки</a></h2>
+        </div>
+    </div>
+    <div class="col-9">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Название новости</th>
+            <th scope="col">Контент</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Автор</th>
+            <th scope="col">Удаление</th>
+            <th scope="col">Редактирование</th>
+            <th scope="col">Создание</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for novelty in news %}
+            <tr>
+                <td>{{ novelty.name }}</td>
+                <td>{{ novelty.content }}</td>
+                <td>{{ novelty.description }}</td>
+                <td>{{ novelty.image }}</td>
+                <td>{{ novelty.author }}</td>
+                <td> <a href="{{ path('admin_news_delete', {'id': novelty.id}) }}">Удалить</a></td>
+                <td> <a href="{{ path('admin_news_update', {'id': novelty.id}) }}">Редактировать</a></td>
+                <td> <a href="{{ path('admin_news_new')}}">Создать</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

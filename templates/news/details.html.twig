@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello NewsController!{% endblock %}
+
+{% block body %}
+
+<!-- ##### Blog Area Start ##### -->
+<div class="hero-area">
+    <div class="col-12 col-lg-8">
+    </div>
+    <div class="blog-area section-padding-0-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-8">
+                    <div class="blog-posts-area">
+
+                        <!-- Single Featured Post -->
+
+                        <div class="single-blog-post featured-post single-post">
+                            <div class="post-thumb">
+                                <a href="#"><img src="{{ news.image }}" alt=""></a>
+                            </div>
+                            <div class="post-data">
+                                <a href="#" class="post-catagory">{{ news.name }}</a>
+                                <a href="#" class="post-title">
+                                    <h5>{{ news.description }}</h5>
+                                </a>
+                                <div class="post-meta">
+                                    <p class="post-author">By <a href="#">{{ news.author }}</a></p>
+                                    <p>{{ news.content }} </p>
+                                    <div class="newspaper-post-like d-flex align-items-center justify-content-between">
+
+                                        <!-- Post Like & Post Comment -->
+                                        <div class="d-flex align-items-center post-like--comments">
+                                            <a href="{{ path('likes', {'id': news.id}) }}" class="post-like"><img
+                                                        src="/img/core-img/like.png" alt="">
+                                                <span>{{ news.likes.count }}</span></a>
+                                            <a href="#" class="post-comment"><img src="/img/core-img/chat.png" alt="">
+                                                <span>{{ newsComments.count }}</span></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="pager d-flex align-items-center justify-content-between">
+                            <div class="prev">
+                                <a href="#" class="active"><i class="fa fa-angle-left"></i> previous</a>
+                            </div>
+                            <div class="next">
+                                <a href="#">Next <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Comment Area Start -->
+                        <div class="comment_area clearfix">
+                            <h5 class="title">{{ newsComments.count }} Comments</h5>
+
+                            <ol>
+                                {% for noveltyComment in newsComments %}
+                                    <!-- Single Comment Area -->
+                                    <li class="single_comment_area">
+                                        <!-- Comment Content -->
+                                        <div class="comment-content d-flex">
+                                            <!-- Comment Author -->
+                                            <div class="comment-author">
+                                                <img src="/img/users/{{ noveltyComment.user.image }}" alt="author">
+                                            </div>
+                                            <!-- Comment Meta -->
+                                            <div class="comment-meta">
+                                                <a href="#" class="post-author">{{ noveltyComment.user.name }}</a>
+                                                <a href="#" class="post-date">April 15, 2018</a>
+                                                <p>{{ noveltyComment.content }}</p>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                {% endfor %}
+
+
+                            </ol>
+                        </div>
+                        {% if not app.user %}
+                            <div class="post-a-comment-area section-padding-80-0">
+                                <h4>Register to leave a comment</h4>
+                            </div>
+
+                        {% else %}
+                            <div class="post-a-comment-area section-padding-80-0">
+                                <h4>Leave a comment</h4>
+
+                                <!-- Reply Service -->
+                                <div class="contact-form-area">
+                                    <form action="/news/{{ news.id }}/comment" method="post">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <textarea name="content" class="form-control" id="message" cols="30"
+                                                          rows="10" placeholder="Message"></textarea>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                <button class="btn newspaper-btn mt-30 w-100" type="submit">Submit
+                                                    Comment
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="blog-sidebar-area">
+                        <!-- Popular News Widget -->
+                        <div class="popular-news-widget mb-50">
+                            <h3>4 Most Popular News</h3>
+                            {% for popularNovelty in popularNews %}
+                                <!-- Single Popular Blog -->
+                                <div class="single-popular-post">
+                                    <a href="/news/{{ popularNovelty.id }}">
+                                        <h6>{{ popularNovelty.name }} </h6>
+                                    </a>
+                                    <p>Added {{ popularNovelty.seconds }}</p>
+                                    <br/>
+                                    <p>{{ popularNovelty.createdAt|date('Y-m-d H:i:s') }}</p>
+                                </div>
+                            {% endfor %}
+
+                            <!-- Latest Comments Widget -->
+                            <div class="latest-comments-widget">
+                                <h3>Latest Comments</h3>
+
+                                {% for latestComment in latestComments %}
+                                    <!-- Single Comments -->
+                                    <div class="single-comments d-flex">
+                                        <div class="comments-thumbnail mr-15">
+                                            <img src="{{ latestComment.user.image }} " alt="">
+                                        </div>
+                                        <div class="comments-text">
+                                            <a href="/news/{{ latestComment.novelty.id }}">{{ latestComment.user.name }}
+                                                <span>on</span>{{ latestComment.novelty.name }}</a>
+                                            <p>Added {{ latestComment.seconds }}</p>
+                                            <br/>
+                                            <p>{{ latestComment.createdAt|date('Y-m-d H:i:s') }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Blog Area End ##### -->
+
+    {% endblock %}
+

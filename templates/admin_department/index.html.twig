@@ -1,0 +1,40 @@
+{% extends 'baseAdmin.html.twig' %}
+{% block body %}
+
+
+    <div class="row">
+    <div class="col-3">
+        <div class="list-group">
+            <h2><a href="{{ path('admin_news') }}" class="list-group-item list-group-item-action">Новости</a></h2>
+            <h2><a href="{{ path('admin_comment') }}" class="list-group-item list-group-item-action">Комментарии</a></h2>
+            <h2><a href="{{ path('admin_department') }}" class="list-group-item list-group-item-action">Депаратаменты</a></h2>
+            <h2><a href="{{ path('admin_users') }}" class="list-group-item list-group-item-action">Пользователи</a></h2>
+            <h2><a href="{{ path('admin_text-block') }}" class="list-group-item list-group-item-action">Блоки</a></h2>
+        </div>
+    </div>
+    <div class="col-9">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Департамент</th>
+            <th scope="col">Удаление</th>
+            <th scope="col">Редактирование</th>
+            <th scope="col">Добавление</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for department in departments %}
+            <tr>
+                <td>{{ department.name }}</td>
+                <td><a href="{{ path('admin_department_delete', {'id': department.id}) }}">Удалить</a></td>
+                <td><a href="{{ path('admin_department_update', {'id': department.id}) }}">Редактировать</a></td>
+                <td><a href="{{ path('admin_department_new') }}">Создать</a></td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </div>
+
+{% endblock %}
