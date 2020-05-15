@@ -7,8 +7,14 @@ use App\Entity\Like;
 use App\Entity\News;
 use App\Entity\TextBlock;
 use App\Entity\User;
+use App\Form\Type\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -86,8 +92,31 @@ class HomeController extends AbstractController
     /**
      * @Route("/connect", name="connect")
      */
-    public function connect()
+    public function connect(Request $request,\Swift_Mailer $mailer)
     {
+        $form = $this->createFormBuilder()
+            ->add('from', EmailType::class)
+            ->add('message', TextareaType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $message = (new \Swift_Message())
+                ->setSubject('Contact Form Submission')
+                ->setFrom($form->getData()['from'])
+                ->setBody(
+                    $form->getData()['message'],
+                    'text/plain'
+                )
+            ;
+
+            $mailer->send($message);
+            return $this->redirectToRoute('connect');
+        }
+
         $array = [];
 
         $text_blocks = $this->getDoctrine()
@@ -101,6 +130,7 @@ class HomeController extends AbstractController
         return $this->render('connect/index.html.twig', [
             'controller_name' => 'HomeController',
             'text_blocks' => $array,
+            'form' => $form->createView(),
         ]);
     }
 

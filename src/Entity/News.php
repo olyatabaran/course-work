@@ -170,7 +170,7 @@ class News
         }elseif ($seconds > 60) {
             return intval($seconds / 60) . " minutes ago ";
         }elseif ($seconds < 60) {
-            return $seconds. " minutes ago ";
+            return $seconds. " seconds ago ";
         }
     }
 
