@@ -53,9 +53,10 @@
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination mt-50">
-                        {% for novelty in news %}
+
+                        {% for i in 1..pages %}
                             <li class="page-item"><a class="page-link"
-                                                     href="{{ path('newsPages', {'id': novelty.id}) }}">{{ novelty.id }}</a>
+                                                     href="{{ path('newsPages', {'page': i}) }}">{{ i }}</a>
                             </li>
                         {% endfor %}
                     </ul>

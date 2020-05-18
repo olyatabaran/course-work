@@ -43,27 +43,15 @@ class NewsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function printNews()
+    public function printNews($page, $per_page)
     {
-        $total_news = $this->createQueryBuilder('news')
-            ->select('count(news.id)')
+        return $this->createQueryBuilder('news')
+            ->setFirstResult(($page - 1) * $per_page)
+            ->groupBy('news.id')
+            ->orderBy('news.id', 'DESC')
+            ->setMaxResults($per_page)
             ->getQuery()
-            ->getSingleScalarResult();
-
-        $per_page = 4;
-        $page = 1;
-        $pages_count = ceil($total_news / $per_page);
-        $page_step = ($page - 1) * $per_page;
-            $qb = $this->createQueryBuilder('news');
-        for($i = 0 ; $i < $total_news; $i++){
-            return $qb
-                ->groupBy('news.id')
-                ->orderBy('news.id', 'DESC')
-                ->getQuery()
-                ->getResult();
-        }
-           return null;
-
+            ->getResult();
     }
 
     // /**
