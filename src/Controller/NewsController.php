@@ -7,7 +7,9 @@ use App\Entity\Like;
 use App\Entity\News;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsController extends AbstractController
@@ -22,11 +24,7 @@ class NewsController extends AbstractController
 
         $news = $this->getDoctrine()
             ->getRepository(News::class)
-            ->printNews($page,$per_page);
-
-        $likes = $this->getDoctrine()
-            ->getRepository(Like::class)
-            ->countLike();
+            ->printNews($page, $per_page);
 
         $comments = $this->getDoctrine()
             ->getRepository(Comment::class)
@@ -52,7 +50,6 @@ class NewsController extends AbstractController
 
         return $this->render('news/index.html.twig', [
             'total_news' => $total_news,
-            'likes' => $likes,
             'comments' => $comments,
             'user' => $this->getUser(),
             'popularNews' => $popularNews,
@@ -65,7 +62,7 @@ class NewsController extends AbstractController
 
 
     /**
-     * @Route("/news/{id}/like", name="likes")
+     * @Route("/news/{id}/like", name="likes", methods={"POST"})
      */
     public function newLike($id, Request $request)
     {
@@ -99,8 +96,14 @@ class NewsController extends AbstractController
             $entityManager->flush();
 
         }
+        $likes = $this->getDoctrine()
+            ->getRepository(Like::class)
+            ->findBy([
+                'news' => $novelty
+            ]);
 
-        return $this->redirect($request->headers->get('referer'));
+
+        return new JsonResponse(['error' => false, 'count' => count($likes)]);
 
     }
 
@@ -160,8 +163,32 @@ class NewsController extends AbstractController
 
         $entityManager->persist($comment);
         $entityManager->flush();
-        return $this->redirectToRoute('newsDetails', ['id' => $id]);
+
+        return new JsonResponse(['error' => false]);
     }
 
+    /**
+     * @Route("/ajax-comments/{id}")
+     */
+    function ajaxComments($id){
+
+        $news = $this->getDoctrine()
+            ->getRepository(News::class)
+            ->find($id);
+
+        $comments = $news->getComments();
+
+        $response = [];
+
+        foreach ($comments as $comment){
+            $response[] = [
+                'content' => $comment->getContent(),
+                'image' => $comment->getUser()->getImage(),
+                'name' => $comment->getUser()->getName()
+            ];
+        }
+
+        return new JsonResponse(['comments' => $response, 'count' => count($comments)]);
+    }
 
 }

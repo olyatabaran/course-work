@@ -55,32 +55,9 @@
                         </div>
 
                         <!-- Comment Area Start -->
-                        <div class="comment_area clearfix">
-                            <h5 class="title">{{ newsComments.count }} Comments</h5>
-
-                            <ol>
-                                {% for noveltyComment in newsComments %}
-                                    <!-- Single Comment Area -->
-                                    <li class="single_comment_area">
-                                        <!-- Comment Content -->
-                                        <div class="comment-content d-flex">
-                                            <!-- Comment Author -->
-                                            <div class="comment-author">
-                                                <img src="/img/users/{{ noveltyComment.user.image }}" alt="author">
-                                            </div>
-                                            <!-- Comment Meta -->
-                                            <div class="comment-meta">
-                                                <a href="#" class="post-author">{{ noveltyComment.user.name }}</a>
-                                                <a href="#" class="post-date">April 15, 2018</a>
-                                                <p>{{ noveltyComment.content }}</p>
-                                            </div>
-                                        </div>
-
-                                    </li>
-                                {% endfor %}
+                        <div class="comment_area clearfix" id="comment-list" data-news-id="{{ news.id }}">
 
 
-                            </ol>
                         </div>
                         {% if not app.user %}
                             <div class="post-a-comment-area section-padding-80-0">
@@ -93,14 +70,14 @@
 
                                 <!-- Reply Service -->
                                 <div class="contact-form-area">
-                                    <form action="/news/{{ news.id }}/comment" method="post">
+                                    <form action="/news/{{ news.id }}/comment" method="post" id="comment-add-form">
                                         <div class="row">
                                             <div class="col-12">
                                                 <textarea name="content" class="form-control" id="message" cols="30"
                                                           rows="10" placeholder="Message"></textarea>
                                             </div>
                                             <div class="col-12 text-center">
-                                                <button class="btn newspaper-btn mt-30 w-100" type="submit">Submit
+                                                <button class="btn newspaper-btn mt-30 w-100" id="button1" type="submit">Submit
                                                     Comment
                                                 </button>
                                             </div>
@@ -158,4 +135,6 @@
     <!-- ##### Blog Area End ##### -->
 
     {% endblock %}
-
+    {% block javascripts %}
+        <script src="/js/comments.js"></script>
+    {% endblock %}
