@@ -1,5 +1,6 @@
 {% extends 'baseAdmin.html.twig' %}
 {% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
     <div class="list-group">
         <h2><a href="{{ path('admin_news') }}" class="list-group-item list-group-item-action">Новости</a></h2>
         <h2><a href="{{ path('admin_comment') }}" class="list-group-item list-group-item-action">Комментарии</a></h2>
@@ -7,4 +8,5 @@
         <h2><a href="{{ path('admin_users') }}" class="list-group-item list-group-item-action">Пользователи</a></h2>
         <h2><a href="{{ path('admin_text-block') }}" class="list-group-item list-group-item-action">Блоки</a></h2>
     </div>
+    {% endif %}
 {% endblock %}
