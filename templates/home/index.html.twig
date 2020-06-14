@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-12 col-md-6 col-lg-8">
                 <div class="row">
-
+            <ul class="single-blog-post featured-post-2"></ul>
                     <!-- Single Featured Post -->
 
                     <div class="col-12 col-lg-7">
@@ -22,7 +22,7 @@
                                 <a href="/news/{{ news.0.id }}"><img src="{{ news.0.image }}" alt=""></a>
                             </div>
                             <div class="post-data">
-                                <a href="#" class="post-title">
+                                <a href="/news/{{ news.0.id }}" class="post-title">
                                     <h6>{{ news.0.name }}</h6>
                                 </a>
                                 <div class="post-meta">
@@ -49,7 +49,7 @@
                                 <a href="/news/{{ news.1.id }}"><img src="{{ news.1.image }}" alt=""></a>
                             </div>
                             <div class="post-data">
-                                <a href="#" class="post-catagory">{{ news.1.name }}</a>
+                                <a href="/news/{{ news.1.id }}" class="post-catagory">{{ news.1.name }}</a>
                                 <div class="post-meta">
                                     <a href="#" class="post-title">
                                         <h6>{{ news.1.description }}</h6>
@@ -70,7 +70,7 @@
                                 <a href="/news/{{ news.2.id }}"><img src="{{ news.2.image }}" alt=""></a>
                             </div>
                             <div class="post-data">
-                                <a href="#" class="post-catagory">{{ news.2.name }}</a>
+                                <a href="/news/{{ news.2.id }}" class="post-catagory">{{ news.2.name }}</a>
                                 <div class="post-meta">
                                     <a href="#" class="post-title">
                                         <h6>{{ news.2.content }}</h6>
@@ -111,4 +111,5 @@
                 {% endblock %}
                 {% block javascripts %}
                 <script src="/js/likes.js"></script>
+                 <script src="/js/newsSearch.js"></script>
                 {% endblock %}

@@ -26,9 +26,10 @@
                         {% endif %}
                         <!-- Search Service -->
                         <div class="search-form">
-                            <form action="#" method="post">
-                                <input type="search" name="search" class="form-control" placeholder="Search">
+                            <form action="#" method="get">
+                                <input type="search" name="search" class="form-control" id="search-value" placeholder="Search">
                                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <div id="search-result"></div>
                             </form>
                         </div>
                     </div>
@@ -37,3 +38,6 @@
         </div>
     </div>
 </div>
+{% block javascripts %}
+    <script src="/js/newsSearch.js"></script>
+{% endblock %}

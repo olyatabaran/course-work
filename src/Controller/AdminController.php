@@ -12,6 +12,7 @@ use App\Form\Type\DepartmentType;
 use App\Form\Type\NewsType;
 use App\Form\Type\TextBlockType;
 use App\Form\Type\UserType;
+use App\Service\NewsGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -237,12 +238,17 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/admin/news/delete/{id}", name="admin_news_delete")
+     * @param $id
+     * @param NewsGenerator $newsGenerator
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteNews($id)
+    public function deleteNews($id, NewsGenerator $newsGenerator)
     {
         $novelty = $this->getDoctrine()
             ->getRepository(News::class)
             ->find($id);
+
+        $newsGenerator->deleteNews($novelty);
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($novelty);

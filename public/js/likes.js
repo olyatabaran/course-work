@@ -17,7 +17,7 @@ $('.post-like').click(function (e) {
             if (!resp.error) {
                 that.find('span').text(resp.count);
             } else {
-                alert('Somthing wrong');
+                alert('Something wrong');
             }
         }
     });
