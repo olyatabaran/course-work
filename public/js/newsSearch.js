@@ -30,7 +30,7 @@ $('.search-form').keyup(function (e) {
             if (!resp.error) {
                 let output = '';
                 resp.news.forEach(function (novelty) {
-                    output += `<a href="/news/${novelty.id}">${novelty.name}
+                    output += `<a href="/news/${novelty.id}"><h3 class="post-catagory">${novelty.name}</h3>
                                   <hr>
                                   ${novelty.description}
                                  

@@ -267,10 +267,11 @@ class AdminController extends AbstractController
             ->getRepository(News::class)
             ->find($id);
 
-        $newsGenerator->updateNews($novelty);
 
         $form = $this->createForm(NewsType::class, $novelty);
         $form->handleRequest($request);
+
+        $newsGenerator->updateNews($novelty);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $brochureFile = $form->get('image')->getData();
