@@ -109,7 +109,7 @@ class NewsGenerator
         return $response;
     }
 
-    public function updateNews($news){
+    public function updateNews($novelty){
 
         $client = $this->getElasticConnection();
 
@@ -118,7 +118,10 @@ class NewsGenerator
                 'id' => $novelty->getId(),
                 'body' => [
                     'doc' => [
-                        'new_field' => 'abc'
+                        'content' => $novelty->getContent(),
+                        'description' => $novelty->getDescription(),
+                        'name' => $novelty->getName(),
+                        'author' => $novelty->getAuthor()
                     ]
                 ]
             ];
@@ -137,5 +140,25 @@ class NewsGenerator
             ];
 
         $client->delete($params);
+    }
+
+    public function newNovelty($novelty){
+
+        $client = $this->getElasticConnection();
+
+        $params = [
+            'index' => 'news',
+            'id' => $novelty->getId(),
+            'body' => [
+                'doc' => [
+                    'content' => $novelty->getContent(),
+                    'description' => $novelty->getDescription(),
+                    'name' => $novelty->getName(),
+                    'author' => $novelty->getAuthor()
+                ]
+            ]
+        ];
+
+        $client->create($params);
     }
 }

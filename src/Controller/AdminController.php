@@ -261,11 +261,13 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/news/update/{id}", name="admin_news_update")
      */
-    public function updateNews($id, Request $request, SluggerInterface $slugger)
+    public function updateNews($id, Request $request, SluggerInterface $slugger,NewsGenerator $newsGenerator)
     {
         $novelty = $this->getDoctrine()
             ->getRepository(News::class)
             ->find($id);
+
+        $newsGenerator->updateNews($novelty);
 
         $form = $this->createForm(NewsType::class, $novelty);
         $form->handleRequest($request);
@@ -305,9 +307,10 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/news/new", name="admin_news_new")
      */
-    public function newNews(Request $request, SluggerInterface $slugger)
+    public function newNews(Request $request, SluggerInterface $slugger, NewsGenerator $newsGenerator)
     {
         $novelty = new News();
+
         $form = $this->createForm(NewsType::class, $novelty);
         $form->handleRequest($request);
 
@@ -334,6 +337,7 @@ class AdminController extends AbstractController
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($novelty);
                 $entityManager->flush();
+                $newsGenerator->newNovelty($novelty);
                 return $this->redirectToRoute('admin_news');
             }
 
